@@ -1,12 +1,5 @@
-﻿using Auth.Models;
-using Auth.Repositories;
-using Auth.Services;
-using Auth.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Threading.Tasks;
 
 namespace Auth.Controllers
 {
@@ -15,15 +8,15 @@ namespace Auth.Controllers
     public class HomeController : Controller
     {
         [HttpGet]
-        [Route("noauth")]
-        [Authorize]
+        [Route("public")]
+        [AllowAnonymous]
         public string NoAuthRequiredMethod()
         {
             return "This method is free for everyone!";
         }
 
         [HttpGet]
-        [Route("authrequired")]
+        [Route("private")]
         [Authorize]
         public string AuthRequiredMethod()
         {

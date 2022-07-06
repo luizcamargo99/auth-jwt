@@ -11,6 +11,7 @@ namespace Auth.Services
     public class TokenService
     {
         private readonly IConfiguration _config;
+        private readonly DateTime _expiresTime = DateTime.Now.AddDays(1);
         public TokenService(IConfiguration configuration)
         {
             _config = configuration;
@@ -28,7 +29,7 @@ namespace Auth.Services
                     new Claim(ClaimTypes.Name, user.Name)
                 }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-                Expires = DateTime.Now.AddDays(1)
+                Expires = _expiresTime
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

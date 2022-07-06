@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Threading.Tasks;
 
 namespace Auth.Controllers
 {
@@ -40,21 +39,12 @@ namespace Auth.Controllers
 
                 userViewModel.User.Password = null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
             return userViewModel;
         }
-
-        [HttpGet]
-        [Route("details")]
-        [Authorize]
-        public string Details()
-        {
-            return "Funcionou!";
-        }
-
     }
 }
