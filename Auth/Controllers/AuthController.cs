@@ -22,7 +22,7 @@ namespace Auth.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult<UserViewModel> Auth([FromBody] User user)
+        public ActionResult<UserViewModel> Authenticate([FromBody] User user)
         {
             UserViewModel userViewModel = new UserViewModel();
 
