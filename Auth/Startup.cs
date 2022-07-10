@@ -1,3 +1,5 @@
+using Auth.Constants;
+using Auth.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +40,7 @@ namespace Auth
                 b.RequireHttpsMetadata = false;
                 b.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetValue<string>("JwtSecret"))),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TokenConstant.Secret)),
                     ValidateIssuer = false,
                     ValidateIssuerSigningKey = true,
                     ValidateAudience = false
@@ -63,12 +65,12 @@ namespace Auth
             app.UseAuthentication();
 
             app.UseAuthorization();
-
+            
             app.UseCors(c => c
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-            
+
 
             app.UseEndpoints(endpoints =>
             {

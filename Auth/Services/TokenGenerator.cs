@@ -1,5 +1,5 @@
-﻿using Auth.Models;
-using Microsoft.Extensions.Configuration;
+﻿using Auth.Constants;
+using Auth.Models;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -8,19 +8,13 @@ using System.Text;
 
 namespace Auth.Services
 {
-    public class TokenService
+    public class TokenGenerator
     {
-        private readonly IConfiguration _config;
         private readonly DateTime _expiresTime = DateTime.Now.AddDays(1);
-        public TokenService(IConfiguration configuration)
-        {
-            _config = configuration;
-        }
 
         public string Generate(User user)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_config.GetValue<string>("JwtSecret"));
+            var tokenHandler = new JwtSecurityTokenHandler();            
 
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
@@ -28,7 +22,7 @@ namespace Auth.Services
                 {
                     new Claim(ClaimTypes.Name, user.Name)
                 }),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TokenConstant.Secret)), SecurityAlgorithms.HmacSha256Signature),
                 Expires = _expiresTime
             };
 

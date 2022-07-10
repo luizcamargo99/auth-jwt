@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Controllers
@@ -20,7 +21,7 @@ namespace Auth.Controllers
         [Authorize]
         public string AuthRequiredMethod()
         {
-            return "If you can see this, you have a token!";
+            return $"Hi, {User.Identity.Name}. If you can see this, you have a token!";
         }
 
     }

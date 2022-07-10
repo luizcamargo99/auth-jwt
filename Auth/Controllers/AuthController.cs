@@ -4,7 +4,6 @@ using Auth.Services;
 using Auth.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
 
 namespace Auth.Controllers
@@ -13,13 +12,6 @@ namespace Auth.Controllers
     [ApiController]
     public class AuthController : Controller
     {
-        private readonly IConfiguration _config;
-
-        public AuthController(IConfiguration configuration)
-        {
-            _config = configuration;
-        }
-
         [HttpPost]
         [AllowAnonymous]
         public ActionResult<UserViewModel> Authenticate([FromBody] User user)
@@ -35,9 +27,9 @@ namespace Auth.Controllers
                     return NotFound("User not found!");
                 }
 
-                userViewModel.Token = new TokenService(_config).Generate(userViewModel.User);
-
                 userViewModel.User.Password = null;
+
+                userViewModel.Token = new TokenGenerator().Generate(userViewModel.User);
             }
             catch (Exception ex)
             {

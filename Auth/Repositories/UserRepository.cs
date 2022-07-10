@@ -9,17 +9,15 @@ namespace Auth.Repositories
     {
         public User Get(User user)
         {
-            List<User> users = Create();
-
             if (string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Password))
             {
                 throw new NullReferenceException("There are empty fields!");
             } 
 
-            return users.FirstOrDefault(x => x.Name.ToLower() == user.Name.ToLower() && x.Password == user.Password);
+            return GetUsers().FirstOrDefault(x => x.Name.ToLower() == user.Name.ToLower() && x.Password == user.Password);
         }
 
-        public List<User> Create()
+        public List<User> GetUsers()
         {
             List<User> users = new List<User>();
 
